@@ -346,7 +346,7 @@ def predict(
     if stop_remainder < 0:
         stop_remainder = stop_remainder + stop_every
     md = get_dataset_metadata(FLAGS.dataset)
-    inputs = preprocess(inputs, md["image_mean"], md["image_std"], FLAGS.num_patches)
+    inputs = preprocess(inputs, md["image_mean"], md["image_std"], FLAGS.num_patches, FLAGS.dataset)
     x = inputs
     # We will start with a channel mixing MLP instead of token mixing.
     all_states = {}
