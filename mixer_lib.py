@@ -375,6 +375,19 @@ def get_dataset_metadata(dataset):
             "input_width": 32,
             "input_channel": 3,
         }
+    
+    elif dataset =='mnist':
+        return {
+            "num_classes": 10,
+            "num_examples_train": 60000,
+            "num_examples_test": 10000,
+            "image_mean": (0.1307,),
+            "image_std": (0.3081,),
+            "input_height": 28,
+            "input_width": 28,
+            "input_channel": 1,
+        }
+    
     elif dataset == "imagenet-100":
         return {
             "num_classes": 100,
