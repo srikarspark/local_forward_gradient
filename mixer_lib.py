@@ -279,8 +279,8 @@ def normalize(x, swap=False, batch_norm=False, layer_norm_all=False):
 def normalize_images(images, mean_rgb, stddev_rgb, dt_name):
     """Normalize the image using ImageNet statistics."""
     if dt_name == 'mnist':
-        normed_images = images - jnp.array(mean_rgb).reshape((1, 1, 1, 1))
-        normed_images = normed_images / jnp.array(stddev_rgb).reshape((1, 1, 1, 1))
+        normed_images = images - jnp.array(mean_rgb).reshape((1, 1, 1))
+        normed_images = normed_images / jnp.array(stddev_rgb).reshape((1, 1, 1))
     else:    
         normed_images = images - jnp.array(mean_rgb).reshape((1, 1, 1, 3))
         normed_images = normed_images / jnp.array(stddev_rgb).reshape((1, 1, 1, 3))
