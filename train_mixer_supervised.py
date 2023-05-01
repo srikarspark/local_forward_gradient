@@ -1150,6 +1150,8 @@ def get_dataset(split, seed=0):
         return get_dataset_imagenet100(split, seed=seed)
     elif FLAGS.dataset in ["imagenet2012"]:
         return get_dataset_imagenet100(split, imagenet2012=True, seed=seed)
+    elif FLAGS.dataset in ['mnist']:
+        return get_dataset_mnist(split, seed=seed)
     else:
         raise ValueError("Dataset not found {}".format(FLAGS.dataset))
 
