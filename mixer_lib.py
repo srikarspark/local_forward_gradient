@@ -391,6 +391,17 @@ def get_dataset_metadata(dataset):
             "input_width": 28,
             "input_channel": 1,
         }
+    elif dataset == "svhn_cropped":
+        return {
+            "num_classes": 10,
+            "num_examples_train": 73257,
+            "num_examples_test": 26032,
+            "image_mean": (0.4376821, 0.4437697, 0.47280442),           # mean and rgb taken from: https://deepobs.readthedocs.io/en/v1.2.0-beta0_a/_modules/deepobs/pytorch/datasets/svhn.html
+            "image_std": (0.19803012, 0.20101562, 0.19703614),
+            "input_height": 32,
+            "input_width": 32,
+            "input_channel": 3,
+        }
     
     elif dataset == "imagenet-100":
         return {
