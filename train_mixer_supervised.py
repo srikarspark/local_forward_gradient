@@ -1034,6 +1034,47 @@ def get_dataset_svhn_c(split, seed=0):
     ds = ds.map(rebatch, num_parallel_calls=tf.data.experimental.AUTOTUNE)
     ds = ds.prefetch(tf.data.experimental.AUTOTUNE)
     yield from tfds.as_numpy(ds)
+    
+def get_dataset_caltech101(split, seed=0):
+    batch_size = FLAGS.batch_size
+    data_root = FLAGS.data_root
+    ds = tfds.load(
+        "caltech101", split=_to_tfds_split(split), data_dir=data_root, shuffle_files=True
+    )
+    ds = ds.repeat()
+    ds = ds.shuffle(buffer_size=10 * batch_size, seed=seed)
+    is_parallel = jax.device_count() > 1
+    num_parallel = jax.local_device_count()
+
+    def preprocess(example):
+        image = tf.image.convert_image_dtype(example["image"], tf.float32)
+        image = tf.image.resize(image, size=(224, 224))
+        if split == "train":
+            if FLAGS.aug:
+                image = tf.pad(image, [(4, 4), (4, 4), (0, 0)])
+                image = tf.image.random_crop(image, (224, 224, 3))
+            image = tf.image.random_flip_left_right(image)
+        elif split == "train_noaug":
+            image = tf.image.random_flip_left_right(image)
+        label = tf.cast(example["label"], tf.int32)
+        return {"image": image, "label": label}
+
+    ds = ds.map(preprocess, num_parallel_calls=tf.data.experimental.AUTOTUNE)
+    ds = ds.batch(batch_size)
+
+    def rebatch(batch):
+        if is_parallel:
+            for k in batch:
+                batch[k] = tf.reshape(
+                    batch[k],
+                    [num_parallel, batch_size // num_parallel]
+                    + list(batch[k].shape[1:]),
+                )
+        return batch
+
+    ds = ds.map(rebatch, num_parallel_calls=tf.data.experimental.AUTOTUNE)
+    ds = ds.prefetch(tf.data.experimental.AUTOTUNE)
+    yield from tfds.as_numpy(ds)
 
 def get_dataset_cifar10(split, seed=0):
     batch_size = FLAGS.batch_size
@@ -1194,6 +1235,8 @@ def get_dataset(split, seed=0):
         return get_dataset_mnist(split, seed=seed)
     elif FLAGS.dataset in ['svhn_cropped']:
         return get_dataset_svhn_c(split, seed=seed)
+    elif FLAGS.dataset in ['caltech101']:
+        return get_dataset_caltech101(split, seed=seed)
     else:
         raise ValueError("Dataset not found {}".format(FLAGS.dataset))
 
