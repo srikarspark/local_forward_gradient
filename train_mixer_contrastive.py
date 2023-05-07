@@ -319,7 +319,7 @@ def predict(
         stop_remainder = stop_remainder + stop_every
 
     md = get_dataset_metadata(FLAGS.dataset)
-    inputs = preprocess(inputs, md["image_mean"], md["image_std"], FLAGS.num_patches)
+    inputs = preprocess(inputs, md["image_mean"], md["image_std"], FLAGS.num_patches,FLAGS.dataset)
     x = inputs
     # We will start with a channel mixing MLP instead of token mixing.
     all_states = {}
@@ -591,8 +591,8 @@ def local_loss(
         view1, view2 = batch["view1"], batch["view2"]
         # [B,P,D]
         md = get_dataset_metadata(FLAGS.dataset)
-        view1 = preprocess(view1, md["image_mean"], md["image_std"], FLAGS.num_patches)
-        view2 = preprocess(view2, md["image_mean"], md["image_std"], FLAGS.num_patches)
+        view1 = preprocess(view1, md["image_mean"], md["image_std"], FLAGS.num_patches,FLAGS.dataset)
+        view2 = preprocess(view2, md["image_mean"], md["image_std"], FLAGS.num_patches,FLAGS.dataset)
     else:
         view1, view2 = batch["view1"], batch["view2"]
     B = view1.shape[0]
