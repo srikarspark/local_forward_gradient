@@ -2081,6 +2081,14 @@ def get_dataset(split, seed=0):
             shuffle_files=True,
         )
         jpg = False
+    elif FLAGS.dataset in ["stl10"]:
+        ds = tfds.load(
+            "stl10",
+            split=_to_tfds_split(split),
+            data_dir=data_root,
+            shuffle_files=True,
+        )
+        jpg = False
     elif FLAGS.dataset in ["imagenet-100"]:
         if FLAGS.use_gcs:
             ds = tfds.load(
