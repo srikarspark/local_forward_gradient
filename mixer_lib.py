@@ -403,6 +403,18 @@ def get_dataset_metadata(dataset):
             "input_channel": 3,
         }
     
+    elif dataset == "caltech101":
+        return {
+            "num_classes": 101,
+            "num_examples_train": 3060,
+            "num_examples_test": 6084,
+            "image_mean": (1.0, 1.0, 1.0),
+            "image_std": (1.0, 1.0, 1.0),
+            "input_height": 150,
+            "input_width": 150,
+            "input_channel": 3,
+        }
+    
     elif dataset == "imagenet-100":
         return {
             "num_classes": 100,
