@@ -408,10 +408,10 @@ def get_dataset_metadata(dataset):
             "num_classes": 101,
             "num_examples_train": 3060,
             "num_examples_test": 6084,
-            "image_mean": (1.0, 1.0, 1.0),
-            "image_std": (1.0, 1.0, 1.0),
-            "input_height": 150,
-            "input_width": 150,
+            "image_mean": (0.485, 0.456, 0.406),                        # mean and rgb taken from: https://debuggercafe.com/getting-95-accuracy-on-the-caltech101-dataset-using-deep-learning/
+            "image_std": (0.229, 0.224, 0.225),
+            "input_height": 224,
+            "input_width": 224,
             "input_channel": 3,
         }
     
