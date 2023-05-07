@@ -380,6 +380,18 @@ def get_dataset_metadata(dataset):
             "input_channel": 3,
         }
     
+    elif dataset == "stl10":
+        return {
+            "num_classes": 10,
+            "num_examples_train": 5000,
+            "num_examples_test": 8000,
+            "image_mean": (0.4914, 0.4822, 0.4465),
+            "image_std": (0.2023, 0.1994, 0.2010),
+            "input_height": 96,
+            "input_width": 96,
+            "input_channel": 3,
+        }
+    
     elif dataset =='mnist':
         return {
             "num_classes": 10,
