@@ -2785,9 +2785,10 @@ def main(_):
         else:
             keys = [
                 "backprop",
-                "local_backprop",
-                "local_stopgrad_backprop",
+                "forward_grad_weights",
                 "forward_grad_activations",
+                "global_forward_grad_weights",
+                "global_forward_grad_activations",
             ]
         lr_list = [float(s) for s in FLAGS.lr.split(",")]
         all_results = {}
